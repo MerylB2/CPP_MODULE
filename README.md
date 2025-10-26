@@ -1,4 +1,4 @@
-# PhoneBook
+#EX01 - PhoneBook
 
 A simple phonebook program in C++98 that stores up to 8 contacts.
 
