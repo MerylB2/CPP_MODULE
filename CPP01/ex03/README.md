@@ -120,10 +120,10 @@ jim->setWeapon(*club);
 ## Example Output
 ```bash
 $ ./violence
-Bob attacks with their crude spiked club
-Bob attacks with their some other type of club
-Jim attacks with their crude spiked club  
-Jim attacks with their some other type of club
+Bob attacks with crude spiked club
+Bob attacks with some other type of club
+Jim attacks with crude spiked club  
+Jim attacks with some other type of club
 ```
 
 ## Attack Implementation Comparison
@@ -161,7 +161,7 @@ void HumanB::attack() const {
 ## Usage
 ```bash
 make
-./violence
+./Weapon
 ```
 
 **Remember**: Choose references for **guaranteed relationships**, pointers for **optional flexibility**!
