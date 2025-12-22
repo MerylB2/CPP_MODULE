@@ -15,11 +15,11 @@ private:
     std::string name;
     
 public:
-    Zombie();                           // Default constructor
-    Zombie(std::string name);           // Parameterized constructor
-    Zombie(const Zombie& other);        // Copy constructor
+    Zombie();                               // Default constructor
+    Zombie(std::string name);               // Parameterized constructor
+    Zombie(const Zombie& other);            // Copy constructor
     Zombie& operator=(const Zombie& other); // Assignment operator
-    ~Zombie();                          // Destructor
+    ~Zombie();                              // Destructor
     
     void announce(void);
     void setName(std::string name);
@@ -61,23 +61,23 @@ a = b;                       // Assignment operator
 
 ## Key Differences: new vs new[]
 
-| Operation | Single Object | Array |
-|-----------|---------------|-------|
-| **Allocation** | `new Zombie()` | `new Zombie[N]` |
-| **Deallocation** | `delete zombie` | `delete[] zombies` |
-| **Constructor** | Calls specific constructor | Calls default constructor only |
-| **Initialization** | At allocation | Separate step with setters |
+|    Operation        |         Single Object      |              Array             |
+|---------------------|----------------------------|--------------------------------|
+| **Allocation**      |        `new Zombie()`      |          `new Zombie[N]`       |
+| **Deallocation**    |        `delete zombie`     |        `delete[] zombies`      |
+| **Constructor**     | Calls specific constructor | Calls default constructor only |
+| **Initialization**  |        At allocation       |   Separate step with setters   |
 
 ## Memory Management
 
 ```cpp
 // Correct usage
-Zombie* horde = zombieHorde(5, "Walker");
+Zombie* horde = zombieHorde(5, "Foo");
 // ... use zombies ...
 delete[] horde;  // IMPORTANT: delete[] not delete!
 
 // Wrong - memory leak
-Zombie* horde = zombieHorde(5, "Walker");
+Zombie* horde = zombieHorde(5, "Foo");
 // Missing delete[] - MEMORY LEAK!
 
 // Wrong - undefined behavior  
@@ -106,3 +106,5 @@ make
 - ❌ Trying to use parameterized constructor with `new[]`
 
 **Rule**: If you allocate with `new[]`, you MUST deallocate with `delete[]`
+
+By Méryl BITEE

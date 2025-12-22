@@ -67,4 +67,4 @@ make
 
 **Rule of thumb**: Use stack allocation by default, heap only when necessary.
 
-## By : Méryl BITEE
+By : Méryl BITEE
