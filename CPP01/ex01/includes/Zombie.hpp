@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:52:45 by cmetee-b          #+#    #+#             */
-/*   Updated: 2025/12/22 17:46:26 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2025/12/22 17:25:00 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,17 @@ private:
 	std::string name;
 	
 public:
-	Zombie();								// Default constructor
-	Zombie(std::string name);				// Constructor with name
-	Zombie(const Zombie& other);			// Copy constructor
+	Zombie();							// Default constructor
+	Zombie(std::string name);			// Constructor with name
+	Zombie(const Zombie& other);		// Copy constructor
 	Zombie& operator=(const Zombie& other);	// Assignment operator
-	~Zombie();								// Destructor with destruction message
+	~Zombie();							// Destructor with destruction message
 	
-	void announce(void);					// Makes zombie announce itself
+	void announce(void);				// Makes zombie announce itself
+	void setName(std::string name);		// Sets the zombie's name
 };
 
-// Allocates a zombie on the heap and returns its pointer
-Zombie* newZombie(std::string name);
-
-// Creates a temporary zombie on the stack that announces itself then destructs
-void randomChump(std::string name);
+// Allocates a horde of zombies on the heap and returns its pointer
+Zombie* zombieHorde(int N, std::string name);
 
 #endif

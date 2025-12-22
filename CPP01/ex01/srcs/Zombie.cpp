@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:53:06 by cmetee-b          #+#    #+#             */
-/*   Updated: 2025/12/22 16:15:01 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2025/12/22 16:58:47 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,17 @@ Zombie& Zombie::operator=(const Zombie& other)
 // Destructor: displays a message when destroyed
 Zombie::~Zombie()
 {
-	std::cout << name << " has been destroyed !!!" << std::endl << std::endl;
+	std::cout << name << " has been destroyed !!!" << std::endl;
 }
 
 // Announce method: Zombies announce themselves
 void Zombie::announce(void)
 {
 	std::cout << name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+}
+
+// Setter : sets the zombie's name
+void Zombie::setName(std::string name)
+{
+	this->name = name;
 }
