@@ -1,0 +1,7 @@
+Hello world!
+This is a test file.
+Hello again, world!
+Some text with hello in it.
+HELLO in uppercase.
+Multiple hello hello hello words.
+42

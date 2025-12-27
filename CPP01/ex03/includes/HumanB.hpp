@@ -21,14 +21,14 @@ class HumanB
 {
 private:
     std::string name;
-    Weapon* weapon; // Pointer - may not have a weapon, can be set later
+    Weapon* weapon;
     
 public:
-    HumanB(const std::string& name); // Does not take weapon in constructor
+    HumanB(const std::string& name);
     ~HumanB();
     
-    void setWeapon(Weapon& weapon); // Sets weapon after construction
-    void attack() const;            // Attack function
+    void setWeapon(Weapon& weapon);
+    void attack() const;
 };
 
 #endif

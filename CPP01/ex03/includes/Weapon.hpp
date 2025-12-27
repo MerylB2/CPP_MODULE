@@ -21,14 +21,12 @@ private:
     std::string type;
     
 public:
-    Weapon();                                   // Default constructor
-    Weapon(const std::string& type);            // Parameterized constructor
-    Weapon(const Weapon& other);                // Copy constructor
-    Weapon& operator=(const Weapon& other);     // Assignment operator
-    ~Weapon();                                  // Destructor
+    Weapon();
+    Weapon(const std::string& type);
+    ~Weapon();
     
-    const std::string& getType() const;         // Returns constant reference to type
-    void setType(const std::string& type);      // Sets type using new value
+    const std::string& getType() const;
+    void setType(const std::string& type);
 };
 
 #endif

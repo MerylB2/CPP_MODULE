@@ -21,13 +21,13 @@ class HumanA
 {
 private:
     std::string name;
-    Weapon& weapon; // Reference - always has a weapon, cannot change
+    Weapon& weapon;
     
 public:
-    HumanA(const std::string& name, Weapon& weapon); // Takes weapon in constructor
+    HumanA(const std::string& name, Weapon& weapon);
     ~HumanA();
     
-    void attack() const; // Attack function
+    void attack() const;
 };
 
 #endif

@@ -6,23 +6,23 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:52:53 by cmetee-b          #+#    #+#             */
-/*   Updated: 2025/12/22 16:15:13 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2025/12/27 08:39:06 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Zombie.hpp"
 
-int	main(int argc, char* argv[])
+int	main(int ac, char* av[])
 {
 	std::string zombieName;
 	
-	if (argc > 2)
+	if (ac > 2)
 	{
-		std::cout << "Usage: " << argv[0] << " [zombie_name]" << std::endl;
+		std::cout << "Usage: " << av[0] << " [zombie_name]" << std::endl;
 		return 1;
 	}
-	else if (argc == 2)
-		zombieName = argv[1];
+	else if (ac == 2)
+		zombieName = av[1];
 	else
 		zombieName = "Foo";
 	
@@ -30,8 +30,6 @@ int	main(int argc, char* argv[])
 	Zombie* heapZombie = newZombie(zombieName + "_Heap");
 	heapZombie->announce();
 	delete heapZombie;
-	
-	//std::cout << std::endl;
 	
 	// Stack allocation: zombie automatically destroyed at end of scope
 	randomChump(zombieName + "_Stack");

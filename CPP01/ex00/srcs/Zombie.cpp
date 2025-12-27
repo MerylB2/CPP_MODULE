@@ -12,38 +12,15 @@
 
 #include "Zombie.hpp"
 
-// Default constructor
-Zombie::Zombie()
-{
-}
-
-// Constructor: initializes the zombie's name
 Zombie::Zombie(std::string name) : name(name)
 {
 }
 
-// Copy constructor
-Zombie::Zombie(const Zombie& other) : name(other.name)
-{
-}
-
-// Assignment operator
-Zombie& Zombie::operator=(const Zombie& other)
-{
-	if (this != &other)
-	{
-		name = other.name;
-	}
-	return *this;
-}
-
-// Destructor: displays a message when destroyed
 Zombie::~Zombie()
 {
 	std::cout << name << " has been destroyed !!!" << std::endl << std::endl;
 }
 
-// Announce method: Zombies announce themselves
 void Zombie::announce(void)
 {
 	std::cout << name << ": BraiiiiiiinnnzzzZ..." << std::endl;

@@ -23,13 +23,10 @@ private:
 	std::string name;
 	
 public:
-	Zombie();								// Default constructor
-	Zombie(std::string name);				// Constructor with name
-	Zombie(const Zombie& other);			// Copy constructor
-	Zombie& operator=(const Zombie& other);	// Assignment operator
-	~Zombie();								// Destructor with destruction message
+	Zombie(std::string name);
+	~Zombie();
 	
-	void announce(void);					// Makes zombie announce itself
+	void announce(void);
 };
 
 // Allocates a zombie on the heap and returns its pointer
