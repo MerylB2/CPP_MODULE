@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:22:57 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/09 16:31:03 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/14 14:36:45 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ Fixed::Fixed() : value(0)
 
 Fixed::Fixed(const int intValue)
 {
-    this->value = intValue << this->fractionalBits;
+    this->value = intValue << this->fractionalBits;                 // Convert int to fixed-point representation
 }
 
 Fixed::Fixed(const float floatValue)
 {
-    this->value = roundf(floatValue * (1 << this->fractionalBits));
+    this->value = roundf(floatValue * (1 << this->fractionalBits)); // Convert float to fixed-point representation
 }
 
 Fixed::~Fixed()
@@ -43,6 +43,7 @@ Fixed &Fixed::operator=(const Fixed &other)
     return *this;
 }
 
+
 int Fixed::getRawBits() const
 {
     return this->value;
@@ -53,6 +54,7 @@ void Fixed::setRawBits(int const raw)
     this->value = raw;
 }
 
+// Conversion methods
 float Fixed::toFloat(void) const
 {
     return static_cast<float>(this->value) / (1 << this->fractionalBits);
@@ -117,32 +119,36 @@ Fixed Fixed::operator*(const Fixed &other) const
 Fixed Fixed::operator/(const Fixed &other) const
 {
     Fixed result;
-    result.setRawBits((this->value << this->fractionalBits) / other.value);
+    if (other.value != 0) {
+        result.setRawBits((this->value << this->fractionalBits) / other.value);
+    } else {
+        std::cerr << "Error: Division by zero!" << std::endl;
+    }
     return result;
 }
 
-Fixed &Fixed::operator++()
+Fixed &Fixed::operator++() //prefix increment
 {
-    this->value++;
-    return *this;
+    this->value++;           // Increment the current object's value
+    return *this;            // Return the current object by reference
 }
 
-Fixed Fixed::operator++(int)
+Fixed Fixed::operator++(int) // postfix increment
 {
-    Fixed temp(*this);
-    this->value++;
+    Fixed temp(*this);       // Create a copy of the current object
+    this->value++;           // Increment the current object's value
     return temp;
 }
 
-Fixed &Fixed::operator--()
+Fixed &Fixed::operator--()    // prefix decrement
 {
     this->value--;
     return *this;
 }
 
-Fixed Fixed::operator--(int)
+Fixed Fixed::operator--(int)    // postfix decrement
 {
-    Fixed temp(*this);
+    Fixed temp(*this);          
     this->value--;
     return temp;
 }
@@ -169,6 +175,6 @@ const Fixed &Fixed::max(const Fixed &a, const Fixed &b)
 
 std::ostream &operator<<(std::ostream &out, const Fixed &fixed)
 {
-    out << fixed.toFloat();
+    out << fixed.toFloat();                    
     return out;
 }

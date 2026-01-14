@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:22:57 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/11 20:30:35 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/14 14:24:50 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main(void)
     
     std::cout << b << std::endl;
     
-    std::cout << Fixed::max(a, b) << std::endl;
+    std::cout << Fixed::max(a, b) << std::endl << std::endl;
 
     std::cout << "----- Additional Tests -----" << std::endl;
     Fixed x(3.5f);
@@ -42,6 +42,20 @@ int main(void)
     std::cout << "x <= y: " << (x <= y) << std::endl;
     std::cout << "x == y: " << (x == y) << std::endl;
     std::cout << "x != y: " << (x != y) << std::endl;
+
+    std::cout << "Prefix ++x: " << ++x << std::endl;
+    std::cout << "Postfix y++: " << y++ << std::endl
+                << " (after increment y: " << y << ")" << std::endl;
+    std::cout << "Prefix --x: " << --x << std::endl;
+    std::cout << "Postfix y--: " << y-- << std::endl
+                << " (after decrement y: " << y << ")" << std::endl;
+    std::cout << "Min of x and y: " << Fixed::min(x, y) << std::endl;
+    std::cout << "Max of x and y: " << Fixed::max(x, y) << std::endl << std::endl;
+
+    std::cout << "----- Division by Zero Test -----" << std::endl;
+    Fixed zero(0);
+    std::cout << "x / zero: " << (x / zero) << std::endl;
+    std::cout << "y / zero: " << (y / zero) << std::endl;
 
     return 0;
 }

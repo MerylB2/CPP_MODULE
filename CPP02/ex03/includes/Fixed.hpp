@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:22:57 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/11 20:19:52 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:46:45 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,4 @@ public:
     static const Fixed &max(const Fixed &a, const Fixed &b);
 };
 
-std::ostream &operator<<(std::ostream &out, const Fixed &fixed);
+std::ostream &operator<<(std::ostream &out, const Fixed &fixed);    // Overload the insertion operator for Fixed class

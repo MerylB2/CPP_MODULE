@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:22:57 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/09 16:44:43 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/14 14:09:46 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,3 +35,12 @@ public:
 };
 
 std::ostream &operator<<(std::ostream &out, const Fixed &fixed);  // Overload of the insertion operator
+
+/**** Note : "operator<<" c'est la surcharge de l'opérateur d'insertion pour pouvoir utiliser std::cout avec ta classe :
+ex :
+  Fixed a(42.5f);
+  std::cout << a << std::endl;  // affiche la valeur de a directement
+  Sans cette surcharge, "std::cout << a" ne compilerait pas car C++ ne sait pas comment afficher un objet Fixed.
+  La fonction operator<< convertit l'objet Fixed en une représentation lisible (ici en float) pour l'affichage.
+  
+****/
