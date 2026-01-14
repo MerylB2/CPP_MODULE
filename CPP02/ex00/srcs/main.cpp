@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 19:27:03 by cmetee-b          #+#    #+#             */
-/*   Updated: 2025/12/27 19:29:03 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:44:25 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 int main(void)
 {
-	Fixed a;
-	Fixed b( a );
-	Fixed c;
+	Fixed a;									// Default constructor	
+	Fixed b( a );								// Copy constructor
+	Fixed c;									// Default constructor
 	
-	c = b;
+	c = b;										// Copy assignment operator
 	
 	std::cout << a.getRawBits() << std::endl;
-	std::cout << b.getRawBits() << std::endl;
+	std::cout << b.getRawBits() << std::endl;  
 	std::cout << c.getRawBits() << std::endl;
 	
 	return 0;
