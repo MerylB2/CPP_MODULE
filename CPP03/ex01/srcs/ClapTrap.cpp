@@ -6,31 +6,31 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:37:05 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/15 02:59:32 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/15 02:59:11 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ClapTrap.hpp"
+#include "../includes/ClapTrap.hpp"
 
 ClapTrap::ClapTrap() : name("ClapTrap"), hit_pts(10), energy_pts(10), attackdamage(0)
 {
-    std::cout << "Default constructor called for " << this->name << std::endl;
+    std::cout << "ClapTrap default constructor called for " << this->name << std::endl;
 }
 
 ClapTrap::ClapTrap(const std::string& clap) : name(clap), hit_pts(10), energy_pts(10), attackdamage(0)
 {
-    std::cout << "Parameterized constructor called for " << this->name << std::endl;
+    std::cout << "ClapTrap parameterized constructor called for " << this->name << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap& newClap)
 {
-    std::cout << "Copy assigment constructor called for " << newClap.name << std::endl;
+    std::cout << "ClapTrap copy constructor called for " << newClap.name << std::endl;
     *this = newClap;
 }
 
 ClapTrap &ClapTrap ::operator=(const ClapTrap &other_Clap)
 {
-    std::cout << "Copy assigment operator called for " << other_Clap.name << std::endl;
+    std::cout << "ClapTrap copy assignment operator called for " << other_Clap.name << std::endl;
     if (this != &other_Clap)
     {
         this ->name = other_Clap.name;
@@ -43,7 +43,7 @@ ClapTrap &ClapTrap ::operator=(const ClapTrap &other_Clap)
 
 ClapTrap:: ~ClapTrap ()
 {
-    std::cout << "Destructor called for " << this->name << std::endl;
+    std::cout << "ClapTrap destructor called for " << this->name << std::endl;
 }
 
 void ClapTrap::attack(const std::string& target)
@@ -51,10 +51,10 @@ void ClapTrap::attack(const std::string& target)
     if (this->energy_pts > 0 && this->hit_pts > 0)
     {
         this->energy_pts--;
-        std::cout << this->name << " attacks " << target << " , calling for " << this->attackdamage << " points of damage! (Energy left: " << this->energy_pts << ")" << std::endl;
+        std::cout << "ClapTrap " << this->name << " attacks " << target << ", causing " << this->attackdamage << " points of damage! (Energy left: " << this->energy_pts << ")" << std::endl;
     }
     else
-        std::cout << "No energy left!" << std::endl;
+        std::cout << "ClapTrap " << this->name << " has no energy left!" << std::endl;
 }
 
 void ClapTrap::takeDamage(unsigned int amount)
@@ -62,12 +62,12 @@ void ClapTrap::takeDamage(unsigned int amount)
     if (this->hit_pts <= amount)
     {
         this->hit_pts = 0;
-        std::cout << this->name << " has been destroyed! " << std::endl;
+        std::cout << "ClapTrap " << this->name << " has been destroyed! " << std::endl;
     }
     else
     {
         this->hit_pts -= amount;
-        std::cout << this->name << " takes " << amount << " damage! (HP left: " << this->hit_pts << ", Energy left: " << this->energy_pts << ")" << std::endl;
+        std::cout << "ClapTrap " << this->name << " takes " << amount << " damage! (HP left: " << this->hit_pts << ", Energy left: " << this->energy_pts << ")" << std::endl;
     }
 }
 
@@ -77,9 +77,9 @@ void ClapTrap::beRepaired(unsigned int amount)
     {
         this->hit_pts += amount;
         this->energy_pts--;
-        std::cout << this->name << " repairs itself, regain " << amount << " hit points! (HP: " << this->hit_pts << ", Energy left: " << this->energy_pts << ")" << std::endl;
+        std::cout << "ClapTrap " << this->name << " repairs itself, regain " << amount << " hit points! (HP: " << this->hit_pts << ", Energy left: " << this->energy_pts << ")" << std::endl;
     }
     else
-        std::cout << "Cannot repair: no energy or no HP left!" << std::endl;
+        std::cout << "ClapTrap " << this->name << " cannot repair: no energy or no HP left!" << std::endl;
 }
 
