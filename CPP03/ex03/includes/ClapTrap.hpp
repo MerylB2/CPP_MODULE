@@ -6,19 +6,16 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:52:49 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/15 16:17:36 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/14 17:36:23 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include <iostream>
 
-// Classe de base pour l'heritage
 class ClapTrap
 {
     protected:
-        // "protected" : accessible par ClapTrap ET ses classes derivees (ScavTrap, FragTrap)
-        // "private" ne permettrait pas aux classes derivees d'y acceder
         std::string name;
         unsigned int hit_pts;
         unsigned int energy_pts;
@@ -30,8 +27,7 @@ class ClapTrap
         ClapTrap(const ClapTrap& newClap);
         ClapTrap &operator=(const ClapTrap &other_Clap);
         ~ClapTrap();
-
-        // Methodes heritees par ScavTrap et FragTrap
+        
         void attack(const std::string& target);
         void takeDamage(unsigned int amount);
         void beRepaired(unsigned int amount);
