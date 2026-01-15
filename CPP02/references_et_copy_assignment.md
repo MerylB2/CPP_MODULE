@@ -129,3 +129,55 @@ std::numeric_limits<double>::epsilon();  // 2.22045e-16
 ```
 
 Pour le projet Fixed avec 8 bits fractionnaires : **ε = 0.00390625** (ou `1.0f / 256`).
+
+---
+
+## LIFO et FIFO
+
+### LIFO - Last In, First Out
+Dernier entré, premier sorti. C'est le principe d'une **pile (stack)** :
+
+```
+Empiler: 1, 2, 3
+
+    | 3 |  ← dernier entré, premier à sortir
+    | 2 |
+    | 1 |
+    -----
+```
+
+Exemple concret : une pile d'assiettes - tu prends toujours celle du dessus.
+
+```cpp
+std::stack<int> pile;
+pile.push(1);
+pile.push(2);
+pile.push(3);
+pile.top();  // 3
+pile.pop();  // enlève 3
+pile.top();  // 2
+```
+
+### FIFO - First In, First Out
+Premier entré, premier sorti. C'est le principe d'une **file d'attente (queue)** :
+
+```
+Entrer: 1, 2, 3
+
+    1 → 2 → 3 →
+    ↑         ↑
+  premier   dernier
+  à sortir  à sortir
+```
+
+Exemple concret : une file d'attente au supermarché.
+
+```cpp
+std::queue<int> file;
+file.push(1);
+file.push(2);
+file.push(3);
+file.front();  // 1
+file.pop();    // enlève 1
+file.front();  // 2
+```
