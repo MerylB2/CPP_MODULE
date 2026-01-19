@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 
-NAME    = ClapTrap
+NAME    = Brain
 CXX     = c++
 CXXFLAGS= -Wall -Wextra -Werror -std=c++98
 RM      = rm -rf
@@ -20,7 +20,7 @@ INCDIR	= includes
 SRCDIR  = srcs
 OBJDIR	= objects
 
-SRC     = ClapTrap.cpp main.cpp
+SRC     = Animal.cpp Dog.cpp Cat.cpp Brain.cpp WrongAnimal.cpp WrongCat.cpp main.cpp
 
 VPATH	= $(SRCDIR)
 OBJ		= $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))

@@ -218,3 +218,73 @@ a->makeSound();  // Avec virtual    -> "Woof!" (Dog)
 Construction : Base -> Derivee (comme heritage normal)
 Destruction  : Derivee -> Base (grace au destructeur virtuel)
 ```
+
+---
+
+## Deep Copy vs Shallow Copy (ex01)
+
+### Shallow Copy (copie superficielle) - MAUVAIS
+
+```cpp
+class Dog {
+    Brain* brain;  // Pointeur
+};
+
+Dog a;
+Dog b = a;  // Shallow copy : copie juste le POINTEUR
+```
+
+```
+a.brain -----> [Brain data]
+               ^
+b.brain -------+   (MEME adresse!)
+```
+
+**Problemes :**
+1. Modifier `b.brain` modifie aussi `a.brain` (meme memoire)
+2. Quand `a` est detruit -> `delete brain`
+3. Quand `b` est detruit -> `delete brain` **DOUBLE FREE = CRASH**
+
+### Deep Copy (copie profonde) - CORRECT
+
+```cpp
+Dog::Dog(const Dog& other) {
+    this->brain = new Brain(*other.brain);  // NOUVEAU Brain
+}
+```
+
+```
+a.brain -----> [Brain data A]
+
+b.brain -----> [Brain data B]   (adresse DIFFERENTE, contenu copie)
+```
+
+**Avantages :**
+1. Chaque objet a sa propre memoire
+2. Modifier `b` n'affecte pas `a`
+3. Pas de double free
+
+---
+
+## Rule of Three (C++98)
+
+Si une classe a un **pointeur membre**, tu DOIS implementer :
+
+| Methode | Pourquoi |
+|---------|----------|
+| **Destructeur** `~Dog()` | Liberer la memoire (`delete brain`) |
+| **Copy constructor** `Dog(const Dog&)` | Deep copy a la construction |
+| **Copy assignment** `operator=` | Deep copy a l'affectation |
+
+```cpp
+class Dog {
+    Brain* brain;
+public:
+    Dog();                              // Constructeur : new Brain()
+    Dog(const Dog& other);              // Copy : new Brain(*other.brain)
+    Dog& operator=(const Dog& other);   // Assign : *brain = *other.brain
+    ~Dog();                             // Destructeur : delete brain
+};
+```
+
+**Si tu oublies un des trois** -> bugs memoire garantis (double free, fuite, corruption)
