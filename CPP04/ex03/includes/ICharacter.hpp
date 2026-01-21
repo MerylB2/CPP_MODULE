@@ -13,7 +13,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "AMatreria.hpp"
+#include "AMateria.hpp"
 
 class AMateria; // Declaration anticipée pour eviter les dependances circulaires
 

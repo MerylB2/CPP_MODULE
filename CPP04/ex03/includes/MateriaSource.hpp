@@ -13,8 +13,8 @@
 #pragma once
 
 #include "IMateriaSource.hpp"
-#include "AMatreria.hpp"
-#include "Charater.hpp"
+#include "AMateria.hpp"
+#include "Character.hpp"
 
 class IMateriaSource;
 

@@ -12,7 +12,7 @@
 
 #pragma once
 #include <iostream>
-#include "AMatreria.hpp"
+#include "AMateria.hpp"
 
 class IMateriaSource
 {

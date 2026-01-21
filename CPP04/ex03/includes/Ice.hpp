@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #pragma once
-#include "AMatreria.hpp"
+#include "AMateria.hpp"
 
 class Ice: virtual public AMateria
 {
@@ -22,6 +22,6 @@ class Ice: virtual public AMateria
         Ice &operator=(const Ice& other_Ice);
         ~Ice();
 
-        Ice* clone() const;
+        AMateria* clone() const;
         void use(class ICharacter& target); // Redefinit la methode virtuelle de AMateria
 };

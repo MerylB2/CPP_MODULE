@@ -23,6 +23,6 @@ class Cure: virtual public AMateria
         Cure &operator=(const Cure& other_Cure);
         ~Cure();
         
-        Cure* clone() const;
+        AMateria* clone() const;
         void use(class ICharacter& target); // Redefinit la methode virtuelle de AMateria      
 };

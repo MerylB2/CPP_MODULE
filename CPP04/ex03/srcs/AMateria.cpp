@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/AMatreria.hpp"
+#include "../includes/AMateria.hpp"
 #include "../includes/ICharacter.hpp"
 
 AMateria::AMateria() : type("Default_Materia")
