@@ -6,12 +6,12 @@
 #    By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/26 14:36:40 by cmetee-b          #+#    #+#              #
-#    Updated: 2026/01/15 01:20:55 by cmetee-b         ###   ########.fr        #
+#    Updated: 2026/01/21 12:44:45 by cmetee-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME    = ClapTrap
+NAME    = AMateria
 CXX     = c++
 CXXFLAGS= -Wall -Wextra -Werror -std=c++98
 RM      = rm -rf
@@ -20,7 +20,7 @@ INCDIR	= includes
 SRCDIR  = srcs
 OBJDIR	= objects
 
-SRC     = ClapTrap.cpp main.cpp
+SRC     = AMateria.cpp Ice.cpp Cure.cpp Character.cpp MateriaSource.cpp main.cpp
 
 VPATH	= $(SRCDIR)
 OBJ		= $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
