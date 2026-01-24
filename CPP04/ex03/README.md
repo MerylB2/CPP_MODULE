@@ -5,6 +5,32 @@ Implémenter un système de **Materias** (sorts) équipables par des **Character
 
 ---
 
+## Ce que cet exercice veut nous apprendre
+
+Cet exercice est un **récapitulatif** de tout le module CPP04 et introduit les **interfaces**. Il combine :
+
+| Concept | Où dans l'exercice | Pourquoi |
+|---------|-------------------|----------|
+| **Interface** | `ICharacter`, `IMateriaSource` | Définir un contrat sans implémentation |
+| **Classe Abstraite** | `AMateria` | Fournir une base commune avec code partagé |
+| **Polymorphisme** | `AMateria* → Ice/Cure` | Manipuler différents types via un pointeur de base |
+| **Pattern Prototype** | `clone()` | Copier un objet sans connaître son type concret |
+| **Pattern Factory** | `MateriaSource` | Créer des objets via une fabrique |
+| **Deep Copy** | `Character` copy constructor | Éviter les dangling pointers |
+| **Gestion mémoire** | `equip/unequip/delete` | Comprendre l'ownership des pointeurs |
+
+**Message clé** : En C++ orienté objet, on programme vers des **interfaces**, pas des implémentations. Cela permet de changer l'implémentation sans modifier le code client.
+
+```cpp
+// Le code utilise ICharacter*, pas Character*
+// On pourrait avoir d'autres types de personnages sans changer ce code
+ICharacter* hero = new Character("hero");
+hero->equip(materia);
+hero->use(0, *enemy);
+```
+
+---
+
 ## Notions abordées
 
 ### 1. Interface (Pure Abstract Class)
@@ -106,7 +132,42 @@ AMateria* copy = original->clone();  // Crée une nouvelle Ice
 
 ---
 
-### 5. Deep Copy vs Shallow Copy
+### 5. Factory Pattern (MateriaSource)
+
+`MateriaSource` est une **fabrique** qui stocke des prototypes et crée des copies à la demande.
+
+```cpp
+class MateriaSource : public IMateriaSource {
+    AMateria* templates[4];  // Stocke les prototypes
+
+    void learnMateria(AMateria* m) {
+        // Stocke le prototype
+        templates[slot] = m;
+    }
+
+    AMateria* createMateria(std::string const& type) {
+        // Cherche le prototype et retourne un clone
+        for (int i = 0; i < 4; i++)
+            if (templates[i] && templates[i]->getType() == type)
+                return templates[i]->clone();
+        return NULL;
+    }
+};
+```
+
+**Avantage** : Le code client n'a pas besoin de connaître les classes concrètes (`Ice`, `Cure`).
+
+```cpp
+// Sans Factory : on doit connaître les types
+AMateria* ice = new Ice();
+
+// Avec Factory : on utilise juste le nom
+AMateria* ice = src->createMateria("ice");
+```
+
+---
+
+### 7. Deep Copy vs Shallow Copy
 
 **Shallow Copy** (copie superficielle) : copie les pointeurs, pas les données pointées.
 
@@ -126,7 +187,7 @@ Character::Character(const Character& other) {
 
 ---
 
-### 6. Gestion mémoire et ownership
+### 8. Gestion mémoire et ownership
 
 **Règles importantes :**
 
@@ -197,10 +258,12 @@ make re     # Recompile tout
 
 ## Points clés à retenir
 
-1. **Interface** = contrat pur (pas d'implémentation)
-2. **Classe abstraite** = base commune avec implémentation partielle
+1. **Interface** = contrat pur (pas d'implémentation, préfixe `I`)
+2. **Classe abstraite** = base commune avec implémentation partielle (préfixe `A`)
 3. **`virtual`** = polymorphisme dynamique
 4. **`= 0`** = méthode pure (doit être implémentée par les classes filles)
-5. **Clone pattern** = copier sans connaître le type concret
-6. **Deep copy** obligatoire pour les classes avec pointeurs
-7. **Destructeur virtuel** obligatoire dans les classes de base
+5. **Clone/Prototype pattern** = copier sans connaître le type concret
+6. **Factory pattern** = créer des objets via une fabrique sans connaître les classes concrètes
+7. **Deep copy** obligatoire pour les classes avec pointeurs
+8. **Destructeur virtuel** obligatoire dans les classes de base polymorphiques
+9. **Programmer vers des interfaces** = flexibilité et découplage
