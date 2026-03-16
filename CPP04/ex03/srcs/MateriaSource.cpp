@@ -36,9 +36,9 @@ MateriaSource& MateriaSource::operator=(const MateriaSource& other_MateriaSource
 	std::cout << "MateriaSource copy assignment operator called" << std::endl;
 	if (this != &other_MateriaSource)
 	{
-		for (int i = 0; i < MAX_INVENTORY; i++)
+		for (int i = 0; i < MAX_INVENTORY; i++) // Deep copy des prototypes
 		{
-			if (this->materia_slots[i] != NULL)
+			if (this->materia_slots[i] != NULL) // Nettoyage de l'ancien prototype
 			{
 				delete this->materia_slots[i];
 				this->materia_slots[i] = NULL;
@@ -55,9 +55,9 @@ MateriaSource& MateriaSource::operator=(const MateriaSource& other_MateriaSource
 MateriaSource::~MateriaSource()
 {
 	std::cout << "MateriaSource destructor called" << std::endl;
-	for (int i = 0; i < MAX_INVENTORY; i++)
+	for (int i = 0; i < MAX_INVENTORY; i++) // Delete tous les les prototypes
 	{
-		if (this->materia_slots[i] != NULL)
+		if (this->materia_slots[i] != NULL) // Suppression des Materias allouees
 		{
 			delete this->materia_slots[i];
 			this->materia_slots[i] = NULL;
@@ -65,6 +65,7 @@ MateriaSource::~MateriaSource()
 	}
 }
 
+// Stocke un materia prototype
 void MateriaSource::learnMateria(AMateria* materia)
 {
 	if (materia == NULL)
@@ -84,7 +85,8 @@ void MateriaSource::learnMateria(AMateria* materia)
 	std::cout << "MateriaSource is full. Cannot learn more materia." << std::endl;
 }
 
-AMateria* MateriaSource::createMateria(std::string const & materia_type)
+// Cree un clone du prototype de type materia_type
+AMateria* MateriaSource::createMateria(std::string const &materia_type)
 {
 	for (int i = 0; i < MAX_INVENTORY; i++)
 	{

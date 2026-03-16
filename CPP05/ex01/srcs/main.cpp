@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 14:58:30 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/03/16 19:43:50 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/03/16 19:47:10 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int main()
     std::cout << PURP << "\n===== Form Constructor Exceptions =====" << RST << std::endl;
     try
     {
-        std::cout << "Creating a form with sign grade 1" << std::endl;
+        std::cout << "Creating a form with sign grade 0" << std::endl;
         Form invalidHigh("Oscilloscope Calibration Request", 0, 42);
         std::cout << invalidHigh << std::endl;
     }

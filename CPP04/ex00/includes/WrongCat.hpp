@@ -13,7 +13,16 @@
 #pragma once
 #include "WrongAnimal.hpp"
 
-// WrongCat herite de WrongAnimal - SANS polymorphisme (pas de virtual)
+// DEMONSTRATION du comportement SANS virtual :
+// WrongCat redefini makeSound() MAIS ca ne fonctionne pas via WrongAnimal*
+//
+// Comparaison :
+// | Avec virtual (Animal/Cat)      | Sans virtual (WrongAnimal/WrongCat) |
+// |--------------------------------|-------------------------------------|
+// | Animal* a = new Cat();         | WrongAnimal* w = new WrongCat();    |
+// | a->makeSound(); -> "Meow!"     | w->makeSound(); -> "WrongAnimal!"   |
+// | Appelle Cat::makeSound()       | Appelle WrongAnimal::makeSound()    |
+
 class WrongCat : public WrongAnimal
 {
 	public:
@@ -22,5 +31,5 @@ class WrongCat : public WrongAnimal
 		WrongCat& operator=(const WrongCat& wrong_Cat);
 		~WrongCat();
 
-		void makeSound() const;  // Ne sera PAS appelee via un pointeur WrongAnimal*
+		void makeSound() const;  // JAMAIS appelee via WrongAnimal* (pas de virtual)
 };

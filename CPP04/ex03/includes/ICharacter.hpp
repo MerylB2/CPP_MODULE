@@ -15,18 +15,30 @@
 #include <string>
 #include "AMateria.hpp"
 
-class AMateria; // Declaration anticipée pour eviter les dependances circulaires
+class AMateria; // Declaration anticipee pour eviter les dependances circulaires
+
+// INTERFACE (Pure Abstract Class) :
+// En C++98, pas de mot-cle "interface" -> on utilise une classe purement abstraite
+//
+// Caracteristiques d'une Interface :
+// - TOUTES les methodes sont virtuelles pures (= 0)
+// - AUCUN attribut (pas de donnees membres)
+// - Destructeur virtuel avec corps vide {} (pas = 0, sinon pas de destruction polymorphe)
+// - Ne peut PAS etre instanciee (new ICharacter() interdit)
+//
+// Avantage : definit un CONTRAT que toutes les classes derivees doivent respecter
+// Le code client utilise ICharacter* au lieu de Character* -> polymorphisme et decouplage
+//
+// Convention de nommage : prefixe "I" pour Interface (ICharacter, IMateriaSource...)
 
 class ICharacter
 {
     public:
-        virtual ~ICharacter() {} // Destructeur virtuel
+        virtual ~ICharacter() {} // Destructeur virtuel avec corps vide (PAS = 0)
 
-        virtual std::string const &getName() const = 0; // Methode virtuelle pure
-
-        virtual void equip(AMateria* materia) = 0;    // Equipe une Materia
-        virtual void unequip(int idx) = 0;      // Desequipe une Materia
-        virtual void use(int idx, ICharacter& target) = 0; // Utilise la Materia a l'index idx sur target
-        virtual AMateria* getMateria(int idx) const = 0; // Methode pour obtenir une Materia a l'index idx
-        
+        virtual std::string const& getName() const = 0;          // Pure virtual : retourne le nom
+        virtual void equip(AMateria* materia) = 0;               // Pure virtual : equipe une Materia
+        virtual void unequip(int idx) = 0;                       // Pure virtual : retire une Materia (sans delete!)
+        virtual void use(int idx, ICharacter& target) = 0;       // Pure virtual : utilise la Materia sur target
+        virtual AMateria* getMateria(int idx) const = 0;         // Pure virtual : getter pour acces externe
 };

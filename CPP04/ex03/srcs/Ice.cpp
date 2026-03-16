@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:14:24 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/21 13:01:25 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/24 16:20:57 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ AMateria* Ice::clone() const
     return new Ice(*this);  // Retourne une nouvelle instance de Ice copiee
 }
 
+// Implementation de use pour Ice
 void Ice::use(class ICharacter& target)
 {
     std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;

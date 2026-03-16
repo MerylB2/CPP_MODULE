@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 10:58:17 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/19 11:01:19 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/24 16:38:42 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 #include <iostream>
 #include <string>
 
-// Brain : chaque Dog/Cat a son propre cerveau (deep copy obligatoire)
+// BRAIN - Meme classe que ex01 :
+// Illustre la deep copy avec allocation dynamique
+
 class Brain
 {
 	private:
