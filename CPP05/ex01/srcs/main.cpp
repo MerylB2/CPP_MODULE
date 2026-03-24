@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 14:58:30 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/03/16 19:47:10 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/03/17 12:15:25 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int main()
     std::cout << CYAN << "\n===== Successful Signature =====" << RST << std::endl;
     try
     {
-        Bureaucrat labManager("Tesla", 20);
-        Form solderingPermit("Soldering Station Permit", 25, 10);
+        Bureaucrat labManager("Line", 20);
+        Form solderingPermit("PCB Prototype Approval", 25, 10);
 
         std::cout << GOLD << "Before: " << LIME << solderingPermit << RST << std::endl;
         labManager.signForm(solderingPermit);
