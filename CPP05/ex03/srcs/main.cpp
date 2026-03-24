@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 14:58:30 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/03/17 13:29:31 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/03/24 14:37:55 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int main()
         << RST << std::endl;
     try
     {
-        Bureaucrat chief("Tesla", 1);
+        Bureaucrat chief("Chief", 1);
         Intern someRandomIntern;
         AForm* garden = someRandomIntern.makeForm("shrubbery creation", "lab_garden");
 
@@ -73,7 +73,7 @@ int main()
     std::cout << PURP << "\n===== Intern Creates Robotomy =====" << RST << std::endl;
     try
     {
-        Bureaucrat engineer("Meryl", 40);
+        Bureaucrat engineer("Engineer", 40);
         Intern labIntern;
         AForm* robotomy = labIntern.makeForm("robotomy request", "Signal Generator");
 
@@ -93,7 +93,7 @@ int main()
     std::cout << CYAN << "\n===== Intern Creates Presidential Pardon =====" << RST << std::endl;
     try
     {
-        Bureaucrat director("Babbage", 3);
+        Bureaucrat director("Director", 3);
         Intern officeIntern;
         AForm* pardon = officeIntern.makeForm("presidential pardon", "Broken FPGA");
 
@@ -127,7 +127,7 @@ int main()
     std::cout << CYAN << "\n===== Polymorphism With AForm* =====" << RST << std::endl;
     try
     {
-        Bureaucrat admin("Ada", 1);
+        Bureaucrat admin("Admin", 1);
         Intern multiIntern;
         AForm* forms[3];
 

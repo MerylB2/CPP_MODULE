@@ -34,9 +34,9 @@ void ShrubberyCreationForm::executeAction() const
     std::ofstream output((getTarget() + "_shrubbery").c_str());
 
     output << "               ,@@@@@@@," << std::endl;
-    output << "       ,,,.   ,@@@@@@/@@,  .oo8888o." << std::endl;
+    output << "       ,,,.   ,@@@@@@/@@,  .oo&&&o." << std::endl;
     output << "    ,&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o" << std::endl;
-    output << "   ,%&\\%&&%&&%,@@@\\@@@/@@@88\\88888/88'" << std::endl;
+    output << "   ,%&\\%&&%&&%,@@@\\@@@/@@@88\\&&&&&/88'" << std::endl;
     output << "   %&&%&%&/%&&%@@\\@@/ /@@@88888\\88888'" << std::endl;
     output << "   %&&%/ %&%%&&@@\\ V /@@' `88\\8 `/88'" << std::endl;
     output << "   `&%\\ ` /%&'    |.|        \\ '|8'" << std::endl;
