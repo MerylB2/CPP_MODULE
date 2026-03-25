@@ -210,10 +210,157 @@ Si aucun type ne correspond : tout affiche `impossible`.
 
 ## ex01 - Serialization
 
-*(a completer)*
+### Objectif
+
+Creer une classe `Serializer` avec deux methodes statiques :
+- `serialize(Data* ptr)` → convertit un pointeur en `uintptr_t`
+- `deserialize(uintptr_t raw)` → reconvertit le `uintptr_t` en `Data*`
+
+Puis verifier que le pointeur recupere apres deserialisation est identique
+au pointeur original.
+
+### Qu'est-ce que `uintptr_t`
+
+`uintptr_t` est un type entier non signe garanti assez grand pour contenir
+un pointeur. Il est defini dans `<stdint.h>` (C++98) ou `<cstdint>`.
+
+Il permet de stocker une adresse memoire sous forme d'entier — c'est ce
+qu'on appelle la serialisation d'un pointeur.
+
+### Pourquoi `reinterpret_cast`
+
+`reinterpret_cast` reinterprete les bits bruts d'une valeur sans aucune
+conversion. C'est le seul cast capable de convertir un pointeur en entier
+et vice-versa.
+
+```cpp
+uintptr_t Serializer::serialize(Data* ptr)
+{
+    return reinterpret_cast<uintptr_t>(ptr);
+}
+
+Data* Serializer::deserialize(uintptr_t raw)
+{
+    return reinterpret_cast<Data*>(raw);
+}
+```
+
+`static_cast` ne peut pas faire cette conversion : il ne connait pas
+de relation de type entre `Data*` et `uintptr_t`.
+
+### La structure `Data`
+
+Le sujet exige que `Data` soit non vide (au moins un membre).
+Elle peut contenir plusieurs membres pour rendre le test plus expressif :
+
+```cpp
+struct Data
+{
+    int         value;
+    double      ratio;
+    std::string label;
+};
+```
+
+### Ce que le test verifie
+
+1. Creer un objet `Data` avec des valeurs
+2. Serialiser son adresse → `uintptr_t`
+3. Deserialiser → recuperer un `Data*`
+4. Verifier que `&data == result` (meme adresse)
+5. Verifier que les membres sont identiques
+
+### A retenir pour la soutenance
+
+- `reinterpret_cast` est utilise car il convertit des types sans relation
+- `uintptr_t` garantit que l'entier est assez grand pour un pointeur
+- La serialisation ne copie pas les donnees : elle stocke l'adresse
+- `&data == result` doit etre `true` si la serialisation est correcte
 
 ---
 
 ## ex02 - Identify real type
 
-*(a completer)*
+### Objectif
+
+Creer trois classes vides `A`, `B`, `C` heritant d'une classe de base `Base`
+qui possede un destructeur virtuel. Implementer trois fonctions :
+- `Base* generate(void)` : instancie aleatoirement A, B ou C et retourne un `Base*`
+- `void identify(Base* p)` : identifie le vrai type via `dynamic_cast` sur pointeur
+- `void identify(Base& p)` : identifie le vrai type via `dynamic_cast` sur reference
+
+### Pourquoi le destructeur virtuel est obligatoire
+
+`dynamic_cast` repose sur le RTTI (Run-Time Type Information), qui n'est disponible
+que pour les classes polymorphes. Une classe est polymorphe si elle possede au moins
+une fonction virtuelle. Le destructeur virtuel de `Base` suffit.
+
+Sans lui, `dynamic_cast` ne compile pas sur une classe non-polymorphe.
+
+### Pourquoi A, B, C ne suivent pas la forme canonique
+
+Le sujet le precise explicitement : ces classes etant vides, la forme canonique
+n'est pas requise. `Base` non plus.
+
+### identify sur pointeur
+
+`dynamic_cast<T*>(p)` retourne `NULL` si le cast echoue. On enchaine les tests :
+
+```cpp
+void identify(Base* p)
+{
+    if (dynamic_cast<A*>(p))
+        // c'est un A
+    else if (dynamic_cast<B*>(p))
+        // c'est un B
+    else if (dynamic_cast<C*>(p))
+        // c'est un C
+}
+```
+
+### identify sur reference
+
+`dynamic_cast<T&>(p)` leve `std::bad_cast` si le cast echoue.
+On utilise un bloc try/catch par type, en ignorant silencieusement l'exception :
+
+```cpp
+void identify(Base& p)
+{
+    try { (void)dynamic_cast<A&>(p); /* c'est un A */ return; }
+    catch(const std::exception&) {}
+
+    try { (void)dynamic_cast<B&>(p); /* c'est un B */ return; }
+    catch(const std::exception&) {}
+
+    try { (void)dynamic_cast<C&>(p); /* c'est un C */ return; }
+    catch(const std::exception&) {}
+}
+```
+
+Les catch ne doivent pas afficher l'exception : c'est un echec attendu,
+pas une erreur.
+
+### generate()
+
+Utilise `srand(time(NULL))` dans `main` et `rand() % 3` dans `generate` :
+
+```cpp
+Base* generate(void)
+{
+    switch (rand() % 3)
+    {
+        case 0: return new A;
+        case 1: return new B;
+        case 2: return new C;
+    }
+}
+```
+
+### A retenir pour la soutenance
+
+- `dynamic_cast` necessite une classe polymorphe (au moins une fonction virtuelle)
+- Sur pointeur : retourne `NULL` en cas d'echec → pas d'exception
+- Sur reference : leve `std::bad_cast` en cas d'echec → try/catch obligatoire
+- Les catch doivent etre silencieux car l'echec est prevu (on teste les types un par un)
+- `delete` sur le `Base*` retourne par `generate` appelle bien le destructeur
+  de la classe derivee grace au destructeur virtuel
