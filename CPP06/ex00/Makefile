@@ -6,14 +6,16 @@
 #    By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/26 14:36:40 by cmetee-b          #+#    #+#              #
-#    Updated: 2026/03/25 13:50:06 by cmetee-b         ###   ########.fr        #
+#    Updated: 2026/04/15 18:06:43 by cmetee-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME    = convert
 CXX     = c++
-CXXFLAGS= -Wall -Wextra -Werror -std=c++98
+CXXFLAGS= -Wall -Wextra -Werror -std=c++98 -MMD -MP
+# -MMD : genere un fichier .d par .o listant les dependances (headers inclus)
+# -MP  : ajoute une regle vide pour chaque header (evite une erreur si un .hpp est supprime)
 RM      = rm -rf
 
 INCDIR	= includes
@@ -24,6 +26,7 @@ SRC     = main.cpp ScalarConverter.cpp
 
 VPATH	= $(SRCDIR)
 OBJ		= $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
+DEP		= $(OBJ:.o=.d) # liste des fichiers de dependances generes par -MMD
 
 RED		= \033[1;31m
 GREEN	= \033[1;32m
@@ -55,5 +58,9 @@ fclean: clean
 	@echo "$(RED)Executable removed.$(RESET)"
 
 re: fclean all
+
+# charge les .d pour que make detecte les modifs de .hpp sans avoir a faire make re
+# le '-' devant evite une erreur si les .d n'existent pas encore (premier make)
+-include $(DEP)
 
 .PHONY: all clean fclean re

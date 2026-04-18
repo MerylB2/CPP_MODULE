@@ -6,14 +6,14 @@
 #    By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/26 14:36:40 by cmetee-b          #+#    #+#              #
-#    Updated: 2026/03/25 16:56:07 by cmetee-b         ###   ########.fr        #
+#    Updated: 2026/04/15 18:08:46 by cmetee-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME    = Base
 CXX     = c++
-CXXFLAGS= -Wall -Wextra -Werror -std=c++98
+CXXFLAGS= -Wall -Wextra -Werror -std=c++98 -MMD -MP
 RM      = rm -rf
 
 INCDIR	= includes
@@ -24,6 +24,7 @@ SRC     = main.cpp base.cpp
 
 VPATH	= $(SRCDIR)
 OBJ		= $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
+DEP		= $(OBJ:.o=.d)
 
 RED		= \033[1;31m
 GREEN	= \033[1;32m
@@ -55,5 +56,7 @@ fclean: clean
 	@echo "$(RED)Executable removed.$(RESET)"
 
 re: fclean all
+
+-include $(DEP)
 
 .PHONY: all clean fclean re
