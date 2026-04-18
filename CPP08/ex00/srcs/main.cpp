@@ -17,7 +17,7 @@ static void testVector()
     size_t n;
 
     std::cout << CYAN << "\n===== Test avec std::vector =====" << RST << std::endl;
-    std::cout << GOLD << "Taille du vecteur : " << RST;
+    std::cout << GOLD << "Vector Size : " << RST;
     std::cin >> n;
 
     std::vector<int> vec;
@@ -30,15 +30,15 @@ static void testVector()
     }
 
     int target;
-    std::cout << GOLD << "Valeur a chercher : " << RST;
+    std::cout << GOLD << "Target Value : " << RST;
     std::cin >> target;
 
     try {
         std::vector<int>::iterator it = easyfind(vec, target);
-        std::cout << PURP << "Resultat : " << RST << LIME << *it << RST
-            << PURP << " (trouve)" << RST << std::endl;
+        std::cout << PURP << "Result : " << RST << LIME << *it << RST
+            << PURP << " (Found)" << RST << std::endl;
     } catch (const std::exception& e) {
-        std::cout << PURP << "Resultat : " << RST << REDD << e.what() << RST << std::endl;
+        std::cout << PURP << "Result : " << RST << REDD << e.what() << RST << std::endl;
     }
 }
 
@@ -47,7 +47,7 @@ static void testList()
     size_t n;
 
     std::cout << CYAN << "\n===== Test avec std::list =====" << RST << std::endl;
-    std::cout << GOLD << "Taille de la liste : " << RST;
+    std::cout << GOLD << "List Size: " << RST;
     std::cin >> n;
 
     std::list<int> lst;
@@ -60,15 +60,15 @@ static void testList()
     }
 
     int target;
-    std::cout << GOLD << "Valeur a chercher : " << RST;
+    std::cout << GOLD << "Target Value : " << RST;
     std::cin >> target;
 
     try {
         std::list<int>::iterator it = easyfind(lst, target);
-        std::cout << PURP << "Resultat : " << RST << LIME << *it << RST
-            << PURP << " (trouve)" << RST << std::endl;
+        std::cout << PURP << "Result : " << RST << LIME << *it << RST
+            << PURP << " (Found)" << RST << std::endl;
     } catch (const std::exception& e) {
-        std::cout << PURP << "Resultat : " << RST << REDD << e.what() << RST << std::endl;
+        std::cout << PURP << "Result : " << RST << REDD << e.what() << RST << std::endl;
     }
 }
 
