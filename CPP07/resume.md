@@ -335,6 +335,29 @@ std::cout << b[0];            // appelle const T& operator[] const
 // b[0] = 99;                 // ERREUR de compilation : objet const
 ```
 
+### Bornes valides
+
+Les indices valides vont de `0` a `_size - 1` inclus :
+
+```cpp
+Array<int> a(5);  // indices valides : 0, 1, 2, 3, 4
+
+a[0];   // OK
+a[4];   // OK  (dernier)
+a[5];   // EXCEPTION  (= _size, hors bornes)
+a[-1];  // EXCEPTION  (-1 en size_t = 18446744073709551615 >> _size)
+```
+
+Dans `operator[]`, une seule condition suffit :
+
+```cpp
+if (index >= _size)
+    throw std::out_of_range("index out of bounds");
+```
+
+Pas besoin de tester `index < 0` : `size_t` est non signe, donc un index
+negatif wrap automatiquement vers une valeur enormes qui depasse `_size`.
+
 ### numbers[-2] → exception
 
 `-2` est un `int` negatif converti en `size_t` (type non signe)
