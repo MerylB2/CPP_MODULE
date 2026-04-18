@@ -15,8 +15,8 @@ void iter(T *array, size_t len, F func)
 }
 
 // Fonction template d'exemple : affiche chaque element suivi d'un espace
-// Doit etre instanciee explicitement a l'appel : iter(arr, n, print_arr<int>)
-// car le compilateur ne peut pas deduire T depuis un template non instancie
+// Doit etre instanciée explicitement a l'appel : iter(arr, n, print_arr<int>)
+// car le compilateur ne peut pas deduire T depuis un template non instancié
 template <typename T>
 void print_arr(T &array_element)
 {
