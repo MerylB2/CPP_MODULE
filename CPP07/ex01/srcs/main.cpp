@@ -1,5 +1,6 @@
 #include "iter.hpp"
 #include <iostream>
+#include <string>
 
 #define REDD "\033[0;38;2;255;0;0m"
 #define LIME "\033[0;38;2;0;255;0m"
@@ -10,25 +11,59 @@
 #define RST  "\033[0m"
 #define BOLD "\033[1m"
 
+static void testInts()
+{
+    size_t n;
+
+    std::cout << CYAN << "\n===== Test avec int =====" << RST << std::endl;
+    std::cout << GOLD << "Taille du tableau : " << RST;
+    std::cin >> n;
+
+    int *arr = new int[n];
+    for (size_t i = 0; i < n; ++i)
+    {
+        std::cout << GOLD << "  arr[" << i << "] : " << RST;
+        std::cin >> arr[i];
+    }
+
+    std::cout << PURP << "\nContenu via iter : " << RST << LIME;
+    iter(arr, n, print_arr<int>);
+    std::cout << RST << std::endl;
+
+    delete[] arr;
+}
+
+static void testStrings()
+{
+    size_t n;
+
+    std::cout << CYAN << "\n===== Test avec string =====" << RST << std::endl;
+    std::cout << GOLD << "Taille du tableau : " << RST;
+    std::cin >> n;
+
+    std::string *arr = new std::string[n];
+    for (size_t i = 0; i < n; ++i)
+    {
+        std::cout << GOLD << "  arr[" << i << "] : " << RST;
+        std::cin >> arr[i];
+    }
+
+    std::cout << PURP << "\nContenu via iter : " << RST << LIME;
+    iter(arr, n, print_arr<std::string>);
+    std::cout << RST << std::endl;
+
+    delete[] arr;
+}
+
 int main()
 {
-    std::string strArray[] = {"Love", "Dane", "Code", "Enjoy"};
-    int intArray[] = {1, 2, 42, 78, 6, 3};
-    float floatArray[] = {3.14f, 2.718f, 1.618f, 0.577f};
-
     std::cout << BOLD << GOLD << SOUL
         << "\n******** Iter Tests (ex01) *********"
         << RST << std::endl;
 
-    std::cout << CYAN << "\nString Array: " << RST;
-    iter(strArray, 4, print_arr<std::string>);
+    testInts();
+    testStrings();
 
-    std::cout << CYAN << "\nInteger Array: " << RST;
-    iter(intArray, 6, print_arr<int>);
-
-    std::cout << CYAN << "\nFloat Array: " << RST;
-    iter(floatArray, 4, print_arr<float>);
-
-    std::cout << std::endl << std::endl;
+    std::cout << GOLD << "\n===== End of tests =====" << RST << std::endl;
     return 0;
 }
