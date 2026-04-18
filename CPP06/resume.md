@@ -26,6 +26,57 @@ Ce choix sera justifie a la soutenance.
 ---
 
 ## Notions essentielles : les 4 casts C++
+En C++98, un cast est une conversion de type — transformer une valeur d'un type en
+un autre.
+                                                                                   
+---                                                                                
+Les 4 casts C++98                                                                  
+                                                                                   
+1. static_cast — cast classique
+```cpp                                                                                   
+double x = 3.14;
+int n = static_cast<int>(x);  // 3
+```                                               
+Utilisé pour conversions numériques, pointeurs liés par héritage. Le plus courant. 
+                                                                                   
+---                                                                                
+2. dynamic_cast — cast polymorphique (runtime)                                     
+```cpp                                                                                   
+Animal* a = new Chien();
+Chien* c = dynamic_cast<Chien*>(a);  // OK                                         
+Chat* ch = dynamic_cast<Chat*>(a);   // retourne nullptr
+```                          
+Vérifie le type à l'exécution. Nécessite au moins une fonction virtuelle dans la
+classe. Retourne nullptr si ça échoue (pointeurs) ou lève std::bad_cast            
+(références).   
+                                                                                   
+---             
+3. const_cast — enlève/ajoute const
+```cpp                                                                                   
+const int x = 42;
+int* p = const_cast<int*>(&x);
+```                                                    
+Utilisé rarement — surtout pour interfacer avec du vieux code qui ne respecte pas  
+const.                                                                             
+                                                                                   
+---                                                                                
+4. reinterpret_cast — réinterprétation brute
+```cpp                                                                                   
+int n = 42;
+char* p = reinterpret_cast<char*>(&n);
+```                                             
+Réinterprète les bits bruts. Dangereux, à éviter sauf cas très bas niveau.         
+                                                                                   
+---                                                                                
+A éviter : le cast C-style                                                         
+```cpp                                                                                   
+int n = (int)3.14;  // fonctionne mais dangereux
+```
+Il fait n'importe lequel des 4 casts ci-dessus sans le dire — difficile à débugger.
+                                                                                   
+---                                                                                
+Règle simple : utilise static_cast par défaut, dynamic_cast pour le polymorphisme, 
+les autres rarement.
 
 ### `static_cast`
 
