@@ -11,21 +11,57 @@
 #define RST  "\033[0m"
 #define BOLD "\033[1m"
 
-// int main (void)
-// {
-// 	int a = 2;
-// 	int b = 3;
-// 	::swap(a, b);
+static void testInts()
+{
+    int a, b;
 
-// 	std::cout << "a = " << a << ", b = " << b << std::endl;
-// 	std::cout << "min( a, b ) = " << ::min( a, b ) << std::endl;
-// 	std::cout << "max( a, b ) = " << ::max( a, b ) << std::endl;
-// 	std::string c = "chaine1";
-// 	std::string d = "chaine2";
+    std::cout << CYAN << "\n===== Test avec int =====" << RST << std::endl;
+    std::cout << GOLD << "Entier a : " << RST;
+    std::cin >> a;
+    std::cout << GOLD << "Entier b : " << RST;
+    std::cin >> b;
 
-// 	::swap(c, d);
-// 	std::cout << "c = " << c << ", d = " << d << std::endl;
-// 	std::cout << "min( c, d ) = " << ::min( c, d ) << std::endl;
-// 	std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
-// 	return 0;
-// }
+    std::cout << PURP << "\nAvant swap : " << RST
+        << "a = " << LIME << a << RST
+        << ", b = " << LIME << b << RST << std::endl;
+    ::swap(a, b);
+    std::cout << PURP << "Apres swap : " << RST
+        << "a = " << LIME << a << RST
+        << ", b = " << LIME << b << RST << std::endl;
+    std::cout << GOLD << "min(a, b)  = " << LIME << ::min(a, b) << RST << std::endl;
+    std::cout << GOLD << "max(a, b)  = " << LIME << ::max(a, b) << RST << std::endl;
+}
+
+static void testStrings()
+{
+    std::string c, d;
+
+    std::cout << CYAN << "\n===== Test avec string =====" << RST << std::endl;
+    std::cout << GOLD << "String c : " << RST;
+    std::cin >> c;
+    std::cout << GOLD << "String d : " << RST;
+    std::cin >> d;
+
+    std::cout << PURP << "\nAvant swap : " << RST
+        << "c = " << LIME << c << RST
+        << ", d = " << LIME << d << RST << std::endl;
+    ::swap(c, d);
+    std::cout << PURP << "Apres swap : " << RST
+        << "c = " << LIME << c << RST
+        << ", d = " << LIME << d << RST << std::endl;
+    std::cout << GOLD << "min(c, d)  = " << LIME << ::min(c, d) << RST << std::endl;
+    std::cout << GOLD << "max(c, d)  = " << LIME << ::max(c, d) << RST << std::endl;
+}
+
+int main()
+{
+    std::cout << BOLD << GOLD << SOUL
+        << "\n******** Whatever Tests (ex00) *********"
+        << RST << std::endl;
+
+    testInts();
+    testStrings();
+
+    std::cout << GOLD << "\n===== End of tests =====" << RST << std::endl;
+    return 0;
+}
