@@ -3,6 +3,19 @@
 Ce fichier sert de pense-bête pour résumer chaque exercice du module 08
 et définir les notions essentielles liées aux conteneurs, itérateurs et algorithmes STL.
 
+## STL — Standard Template Library
+
+Bibliothèque standard du C++ composée de trois piliers :
+
+- **Conteneurs** — structures de données prêtes à l'emploi (`vector`, `list`, `map`, `stack`...)
+- **Itérateurs** — objets pour parcourir les conteneurs (se comportent comme des pointeurs)
+- **Algorithmes** — fonctions génériques (`sort`, `find`, `min_element`...)
+
+Le mot **Template** vient du fait que tout est implémenté avec des templates :
+`std::vector<int>`, `std::vector<std::string>`... une seule implémentation, tous les types.
+
+---
+
 ## Règles générales du module
 
 - Compiler en `c++` avec `-Wall -Wextra -Werror`
@@ -245,6 +258,20 @@ while (it != ms.end())
 
 Le sujet demande de vérifier que le même affichage est obtenu avec `std::list`
 (en remplaçant `push` par `push_back`) — les deux doivent produire le même résultat.
+
+### Points cles a retenir
+
+- `std::stack<T>` a un membre `protected c` — le conteneur interne (`std::deque<T>` par défaut)
+- `this->c` obligatoire (pas juste `c`) dans un template hérité d'un template :
+  ```cpp
+  c.begin();        // ERREUR : nom de la base non visible dans un template
+  this->c.begin();  // OK
+  ```
+- `container_type` = typedef de `std::stack` pour le type du conteneur interne
+- `typedef typename ...` pour créer un alias sur un type dépendant d'un template :
+  ```cpp
+  typedef typename std::stack<T>::container_type::iterator iterator;
+  ```
 
 ### A retenir pour la soutenance
 
