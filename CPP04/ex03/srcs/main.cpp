@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:31:18 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/21 12:47:16 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/24 17:10:56 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,25 @@ int main()
 	Character original("Original");
 	original.equip(src->createMateria("ice"));
 	Character copie(original);
-	std::cout << GRY2 << "Original: " << original.getName() << ", Copie: " << copie.getName() << RST << std::endl;
+
+	std::cout << GRY2 << "Noms -> Original: " << original.getName() << ", Copie: " << copie.getName() << RST << std::endl;
+
+	// Verification deep copy : adresses DIFFERENTES = chacun sa propre Materia
+	std::cout << GRY2 << "Adresse Materia original: " << original.getMateria(0) << RST << std::endl;
+	std::cout << GRY2 << "Adresse Materia copie:    " << copie.getMateria(0) << RST << std::endl;
+
+	if (original.getMateria(0) != copie.getMateria(0))
+		std::cout << GRNN << "-> Adresses DIFFERENTES = DEEP COPY OK!" << RST << std::endl;
+	else
+		std::cout << RED1 << "-> Adresses IDENTIQUES = SHALLOW COPY (ERREUR!)" << RST << std::endl;
+
+	// Test supplementaire : modifier copie ne modifie pas original
+	AMateria* copieMateria = copie.getMateria(0);  // Sauvegarder AVANT unequip
+	copie.unequip(0);  // copie n'a plus de Materia slot 0
+	std::cout << GRY2 << "Apres copie.unequip(0):" << RST << std::endl;
+	std::cout << GRY2 << "  original.getMateria(0): " << original.getMateria(0) << " (doit etre NON NULL)" << RST << std::endl;
+	std::cout << GRY2 << "  copie.getMateria(0):    " << copie.getMateria(0) << " (doit etre NULL)" << RST << std::endl;
+	delete copieMateria;  // Evite la fuite memoire (unequip ne delete pas)
 
 	std::cout << RED1 << "\n===== Destruction (ordre inverse) =====" << RST << std::endl;
 	delete bob;

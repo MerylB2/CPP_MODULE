@@ -14,7 +14,19 @@
 #include <iostream>
 #include <string>
 
-// Classe SANS virtual - pour montrer ce qui se passe sans polymorphisme
+// CLASSE SANS VIRTUAL - Demontre ce qui se passe SANS polymorphisme :
+//
+// PROBLEME sans virtual :
+// WrongAnimal* ptr = new WrongCat();
+// ptr->makeSound(); -> appelle WrongAnimal::makeSound() PAS WrongCat!
+// Le compilateur regarde le TYPE DU POINTEUR, pas le type reel de l'objet
+//
+// CONSEQUENCE :
+// - Meme si ptr pointe vers un WrongCat, c'est WrongAnimal::makeSound() qui est appelee
+// - Le destructeur de WrongCat ne sera pas appele -> fuite memoire potentielle
+//
+// Cette classe existe pour COMPARER avec Animal et comprendre l'importance de virtual
+
 class WrongAnimal
 {
 	protected:
@@ -25,8 +37,8 @@ class WrongAnimal
 		WrongAnimal(const std::string& type);
 		WrongAnimal(const WrongAnimal& wrong);
 		WrongAnimal& operator=(const WrongAnimal& wrong);
-		~WrongAnimal();  // PAS virtual !
+		~WrongAnimal();           // PAS virtual -> destruction incorrecte
 
-		void makeSound() const;  // PAS virtual ! -> pas de polymorphisme
+		void makeSound() const;   // PAS virtual -> pas de polymorphisme
 		std::string getType() const;
 };

@@ -13,7 +13,14 @@
 #pragma once
 #include "Animal.hpp"
 
-// Dog herite de Animal - polymorphisme avec virtual
+// CLASSE DERIVEE de Animal :
+// Dog herite de Animal et REDEFINI makeSound()
+//
+// POLYMORPHISME en action :
+// Animal* ptr = new Dog();
+// ptr->makeSound(); -> appelle Dog::makeSound() car virtual dans Animal
+// delete ptr;       -> appelle ~Dog() puis ~Animal() car destructeur virtual
+
 class Dog : public Animal
 {
 	public:
@@ -22,5 +29,5 @@ class Dog : public Animal
 		Dog& operator=(const Dog& other_Dog);
 		~Dog();
 
-		void makeSound() const;  // Override de Animal::makeSound()
+		void makeSound() const;  // Override : affiche "Woof!"
 };

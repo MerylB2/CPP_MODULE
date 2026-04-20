@@ -14,19 +14,26 @@
 #include <iostream>
 #include <string>
 
-// Classe de base pour le polymorphisme
+// CLASSE DE BASE pour le polymorphisme :
+// Dans ex01, Dog et Cat ont maintenant un Brain* alloue dynamiquement
+//
+// DESTRUCTEUR VIRTUEL - Crucial avec allocation dynamique :
+// Animal* a = new Dog();  // Dog alloue un Brain
+// delete a;               // Sans virtual ~Animal : Brain jamais delete -> FUITE!
+//                         // Avec virtual ~Animal : ~Dog() puis ~Animal() -> OK
+
 class Animal
 {
 	protected:
-		std::string type;  // Protected : accessible par les classes derivees
+		std::string type;
 
 	public:
 		Animal();
 		Animal(const std::string& type);
 		Animal(const Animal& newAnimal);
 		Animal& operator=(const Animal& other_Animal);
-		virtual ~Animal();  // Destructeur virtuel obligatoire pour le polymorphisme
+		virtual ~Animal();               // VIRTUAL : destruction polymorphe (appelle ~Dog/~Cat)
 
-		virtual void makeSound() const;  // Virtuel : comportement different selon la classe
-		std::string getType() const;    
+		virtual void makeSound() const;  // VIRTUAL : polymorphisme
+		std::string getType() const;
 };

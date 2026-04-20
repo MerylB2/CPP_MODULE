@@ -14,11 +14,19 @@
 #include "Animal.hpp"
 #include " Brain.hpp"
 
-// Dog herite de Animal - a son propre Brain (deep copy obligatoire)
+// CLASSE CONCRETE derivee de Animal (abstraite) :
+// Dog DOIT implementer makeSound() car c'est une methode pure virtuelle dans Animal
+//
+// Dog est instanciable car elle implemente TOUTES les methodes pures virtuelles
+// Animal* ptr = new Dog();  // OK
+// ptr->makeSound();         // Appelle Dog::makeSound()
+//
+// Combine ex01 (deep copy Brain) + ex02 (classe abstraite)
+
 class Dog : public Animal
 {
 	private:
-		Brain* brain;  // Allocation dynamique, deep copy obligatoire
+		Brain* brain;
 
 	public:
 		Dog();
@@ -26,6 +34,6 @@ class Dog : public Animal
 		Dog& operator=(const Dog& other_Dog);
 		~Dog();
 
-		void makeSound() const;
+		void makeSound() const;  // OBLIGATOIRE : implemente la methode pure virtuelle
 		Brain* getBrain() const;
 };

@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:14:24 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/19 14:38:13 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/24 16:20:34 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ AMateria* Cure::clone() const
     return new Cure(*this);  // Retourne une nouvelle instance de Cure copiee
 }
 
+// Implementation de use pour Cure
 void Cure::use(class ICharacter& target)
 {
     std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl;

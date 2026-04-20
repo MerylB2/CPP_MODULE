@@ -14,17 +14,36 @@
 #include "Animal.hpp"
 #include " Brain.hpp"
 
-// Dog herite de Animal - a son propre Brain (deep copy obligatoire)
+// DOG avec BRAIN - Deep copy obligatoire :
+//
+// ALLOCATION DYNAMIQUE :
+// - Constructeur : brain = new Brain();
+// - Destructeur  : delete brain;
+//
+// DEEP COPY dans constructeur de copie :
+// Dog(const Dog& src) {
+//     this->brain = new Brain(*src.brain);  // Nouveau Brain, copie des idees
+// }
+//
+// DEEP COPY dans operator= :
+// Dog& operator=(const Dog& src) {
+//     if (this != &src) {
+//         delete this->brain;               // Libere l'ancien
+//         this->brain = new Brain(*src.brain); // Nouveau avec copie
+//     }
+//     return *this;
+// }
+
 class Dog : public Animal
 {
 	private:
-		Brain* brain;  // Allocation dynamique, deep copy obligatoire
+		Brain* brain;  // Pointeur -> DEEP COPY obligatoire
 
 	public:
 		Dog();
-		Dog(const Dog& newDog);
-		Dog& operator=(const Dog& other_Dog);
-		~Dog();
+		Dog(const Dog& newDog);              // Deep copy du Brain
+		Dog& operator=(const Dog& other_Dog); // Deep copy du Brain
+		~Dog();                               // delete brain
 
 		void makeSound() const;
 		Brain* getBrain() const;
