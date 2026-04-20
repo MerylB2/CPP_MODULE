@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 10:00:00 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/16 10:08:17 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/24 14:46:24 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int main()
 	std::cout << "i->getType(): " << i->getType() << std::endl;
 
 	std::cout << "\033[1;92m" << "\n===== makeSound() Test (polymorphisme) =====" << "\033[0m" << std::endl;
-	std::cout << "i->makeSound(): ";
+	std::cout << "i(cat)->makeSound(): ";
 	i->makeSound();
-	std::cout << "j->makeSound(): ";
+	std::cout << "j(dog)->makeSound(): ";
 	j->makeSound();
 	std::cout << "meta->makeSound(): ";
 	meta->makeSound();

@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:00:00 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/19 11:09:23 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/24 15:26:18 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int main()
 	copy.getBrain()->setIdea(0, "I want to sleep!");
 	std::cout << "Original idea[0]: " << original.getBrain()->getIdea(0) << std::endl;
 	std::cout << "Copy idea[0]: " << copy.getBrain()->getIdea(0) << std::endl;
-	std::cout << "(Si different = deep copy OK, si pareil = shallow copy ERREUR)" << std::endl;
+	std::cout << "\033[3m" << "(Si different = deep copy OK, si pareil = shallow copy ERREUR)" << "\033[0m" << std::endl;
 
 	std::cout << "\033[1;93m\033[4m" << "\n******************** Test Deep Copy Cat ********************" << "\033[0m" << std::endl << std::endl;
 

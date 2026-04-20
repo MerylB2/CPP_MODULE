@@ -6,7 +6,7 @@
 /*   By: cmetee-b <cmetee-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:00:00 by cmetee-b          #+#    #+#             */
-/*   Updated: 2026/01/19 11:06:30 by cmetee-b         ###   ########.fr       */
+/*   Updated: 2026/01/24 15:18:43 by cmetee-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ Brain::~Brain()
 void Brain::setIdea(int index, const std::string& idea)
 {
 	if (index >= 0 && index < 100)
-		this->ideas[index] = idea;
+		this->ideas[index] = idea;  // Assigne l'idée à l'index spécifié
 }
 
 std::string Brain::getIdea(int index) const
 {
 	if (index >= 0 && index < 100)
 		return this->ideas[index];
-	return "";
+	return ""; // Retourne une chaîne vide si l'index est invalide
 }
