@@ -127,6 +127,10 @@ std::sort(sorted.begin(), sorted.end());
 
 ### addRange template
 
+Permet d'ajouter plusieurs nombres d'un coup via deux itérateurs,
+au lieu d'appeler `addNumber` une fois par valeur. Obligatoire pour
+tester avec 10 000+ nombres sans écrire 10 000 appels.
+
 ```cpp
 template <typename InputIterator>
 void addRange(InputIterator begin, InputIterator end)
@@ -135,6 +139,40 @@ void addRange(InputIterator begin, InputIterator end)
         addNumber(*it);
 }
 ```
+
+Sans addRange — ingérable :
+```cpp
+sp.addNumber(1);
+sp.addNumber(2);
+// ... 9998 appels de plus
+```
+
+Avec addRange — en une ligne :
+```cpp
+std::vector<int> src;
+// remplir src...
+sp.addRange(src.begin(), src.end());  // ajoute tout d'un coup
+```
+
+C'est un template pour accepter n'importe quel type d'itérateur
+(vector, list, deque...) avec une seule implémentation.
+
+### Exemple du sujet et vérification
+
+```cpp
+Span sp(5);
+sp.addNumber(6);
+sp.addNumber(3);
+sp.addNumber(17);
+sp.addNumber(9);
+sp.addNumber(11);
+sp.shortestSpan();  // → 2
+sp.longestSpan();   // → 14
+```
+
+Après tri : {3, 6, 9, 11, 17}
+- shortestSpan : 11 - 9 = 2 (écart minimal entre adjacents)
+- longestSpan  : 17 - 3 = 14 (max - min)
 
 ### Exceptions
 
