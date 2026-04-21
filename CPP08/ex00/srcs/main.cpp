@@ -12,20 +12,43 @@
 #define RST  "\033[0m"
 #define BOLD "\033[1m"
 
+static size_t getSize(const std::string& prompt)
+{
+    int n;
+    std::cout << prompt;
+    std::cin >> n;
+    if (std::cin.fail() || n < 0)
+    {
+        std::cin.clear();                // remet cin en etat normal (enleve le failbit)
+        std::cin.ignore(1000, '\n');     // vide le buffer jusqu'a la fin de ligne
+        throw std::runtime_error("Invalid size input");
+    }
+    return static_cast<size_t>(n);
+}
+
 static void testVector()
 {
     size_t n;
 
     std::cout << CYAN << "\n===== Test avec std::vector =====" << RST << std::endl;
-    std::cout << GOLD << "Vector Size : " << RST;
-    std::cin >> n;
+    try { n = getSize(GOLD "Vector Size : " RST); }
+    catch (const std::exception& e) {
+        std::cout << REDD << e.what() << RST << std::endl;
+        return;
+    }
 
     std::vector<int> vec;
     for (size_t i = 0; i < n; ++i)
     {
         int val;
         std::cout << GOLD << "  vec[" << i << "] : " << RST;
-        std::cin >> val;
+        if (!(std::cin >> val))
+        {
+            std::cin.clear();
+            std::cin.ignore(1000, '\n');
+            std::cout << REDD << "Invalid input, skipping." << RST << std::endl;
+            break;
+        }
         vec.push_back(val);
     }
 
@@ -47,15 +70,25 @@ static void testList()
     size_t n;
 
     std::cout << CYAN << "\n===== Test avec std::list =====" << RST << std::endl;
-    std::cout << GOLD << "List Size: " << RST;
-    std::cin >> n;
+    try { n = getSize(GOLD "List Size : " RST); }
+    catch (const std::exception& e) {                                              
+        std::cout << REDD << e.what() << RST << std::endl;    
+        return;
+    }                                                                              
+    
 
     std::list<int> lst;
     for (size_t i = 0; i < n; ++i)
     {
         int val;
         std::cout << GOLD << "  lst[" << i << "] : " << RST;
-        std::cin >> val;
+        if (!(std::cin >> val))
+        {
+            std::cin.clear();         
+            std::cin.ignore(1000, '\n');
+            std::cout << REDD << "Invalid input, skipping." << RST << std::endl;
+            break;
+        }
         lst.push_back(val);
     }
 

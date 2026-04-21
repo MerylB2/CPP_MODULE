@@ -82,20 +82,45 @@ static void testList()
 }
 
 // Test interactif
+
+
+static size_t getSize(const std::string& prompt)
+{
+	int n;
+	std::cout << prompt;
+	std::cin >> n;
+	if (std::cin.fail() || n < 0)
+	{
+		std::cin.clear();
+		std::cin.ignore(1000, '\n');
+		throw std::runtime_error("Invalid Input");
+	}
+	return static_cast<size_t>(n);
+}
+
 static void testInteractif()
 {
     size_t n;
 
     std::cout << CYAN << "\n===== Test interactif =====" << RST << std::endl;
-    std::cout << GOLD << "Nombre de valeurs à empiler : " << RST;
-    std::cin >> n;
+    try { n = getSize(GOLD "Nombre de valeurs à empiler :" RST); }
+    catch (const std::exception& e) {
+        std::cout << REDD << e.what() << RST << std::endl;
+        return;
+    }
 
     MutantStack<int> ms;
     for (size_t i = 0; i < n; ++i)
     {
         int val;
         std::cout << GOLD << "  push [" << i << "] : " << RST;
-        std::cin >> val;
+        if (!(std::cin >> val))
+        {
+            std::cin.clear();
+            std::cin.ignore(1000, '\n');
+            std::cout << REDD << "Invalid input !" << RST << std::endl;
+            break;
+        }
         ms.push(val);
     }
 

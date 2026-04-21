@@ -11,13 +11,30 @@
 #define RST  "\033[0m"
 #define BOLD "\033[1m"
 
+static size_t getSize(const std::string& prompt)
+{
+	int n;
+	std::cout << prompt;
+	std::cin >> n;
+	if (std::cin.fail() || n < 0)
+	{
+		std::cin.clear();
+		std::cin.ignore(1000, '\n');
+		throw std::runtime_error("Invalid Input");
+	}
+	return static_cast<size_t>(n);
+}
+
 static void testAddNumber()
 {
     unsigned int n;
 
     std::cout << CYAN << "\n===== Test addNumber =====" << RST << std::endl;
-    std::cout << GOLD << "Capacite du Span : " << RST;
-    std::cin >> n;
+    try { n = getSize(GOLD "Capacite du Span : " RST); }
+    catch (const std::exception& e) {
+        std::cout << REDD << e.what() << RST << std::endl;
+        return;
+    }
 
     Span sp(n);
 
@@ -25,7 +42,13 @@ static void testAddNumber()
     {
         int val;
         std::cout << GOLD << "  Nombre [" << i << "] : " << RST;
-        std::cin >> val;
+        if (!(std::cin >> val))
+        {
+            std::cin.clear();
+            std::cin.ignore(1000, '\n');
+            std::cout << REDD << "Invalid input !" << RST << std::endl;
+            break;
+        }
         sp.addNumber(val);
     }
 
