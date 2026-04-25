@@ -34,7 +34,7 @@ void Span::addNumber(int num)
 }
 
 // calcul du plus petit écart minimal entre deux nombres adjacents dans le vecteur trié
-int Span::shortestSpan() const
+long Span::shortestSpan() const
 {
     if (_data.size() < 2)
         throw std::length_error("Numbers are not enough to find a span");
@@ -45,17 +45,17 @@ int Span::shortestSpan() const
     int shortest = sorted[1] - sorted[0];
     for (size_t i = 2; i < sorted.size(); ++i)
         shortest = std::min(shortest, sorted[i] - sorted[i - 1]);
-    return shortest;
+    return (long)shortest;
 }
 
 // calcul du plus grand écart entre deux nombres
 // le plus grand etant la diff entre le max et le min
-int Span::longestSpan() const
+long Span::longestSpan() const
 {
     if (_data.size() < 2)
         throw std::length_error("Numbers are not enough to find a span");
     int maxLong = *std::max_element(_data.begin(), _data.end());
     int minLong =  *std::min_element(_data.begin(), _data.end());
-    return maxLong - minLong;
+    return (long)maxLong - (long)minLong;
 }
 

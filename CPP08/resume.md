@@ -99,6 +99,59 @@ typename T::iterator easyfind(T& container, int value)
 }
 ```
 
+### Robustesse du main — gestion cin avec getline
+
+**Problème avec `cin >>`** : lit token par token, pas ligne par ligne.
+`"1 abc"` → cin lit `1` (succès), `"abc"` reste dans le buffer et empoisonne
+les lectures suivantes → comportement imprévisible.
+
+**Solution : `getline` + `istringstream`** (C++98 compatible)
+
+```cpp
+#include <sstream>  // std::istringstream, std::ostringstream
+
+static bool readInt(const std::string& prompt, int& out)
+{
+    std::string line;
+    std::cout << prompt;
+    if (!std::getline(std::cin, line))  // lit toute la ligne
+        return false;
+    std::istringstream iss(line);
+    char extra;
+    // si extra peut etre lu, il reste du contenu ("1 abc" → invalide)
+    if (!(iss >> out) || iss >> extra)
+        return false;
+    return true;
+}
+```
+
+`getSize` redemande tant que la saisie est invalide :
+```cpp
+static size_t getSize(const std::string& prompt)
+{
+    int n;
+    while (true)
+    {
+        if (!readInt(prompt, n) || n < 0)
+            std::cout << "Invalid input, entrez un entier positif." << std::endl;
+        else
+            return static_cast<size_t>(n);
+    }
+}
+```
+
+`ostringstream` pour construire le prompt avec l'index (compatible C++98) :
+```cpp
+std::ostringstream oss;
+oss << "  vec[" << i << "] : ";
+readInt(oss.str(), val);
+```
+
+**Pourquoi `iss >> extra` et pas `iss.peek() != EOF` ?**
+`std::char_traits<char>::eof()` est techniquement C++98 mais lourd.
+`iss >> extra` est plus simple : si on peut lire un char supplémentaire,
+il reste du contenu → invalide.
+
 ### A retenir pour la soutenance
 
 - `std::find` retourne `end()` si non trouvé — toujours tester avant de déréférencer
@@ -190,7 +243,41 @@ Après tri : {3, 6, 9, 11, 17}
 ### Exceptions
 
 - `addNumber` quand N atteint : `throw std::length_error`
-- `shortestSpan` / `longestSpan` avec 0 ou 1 element : `throw std::logic_error`
+- `shortestSpan` / `longestSpan` avec 0 ou 1 element : `throw std::length_error`
+
+### Overflow — retourner long au lieu de int
+
+`shortestSpan` et `longestSpan` retournent `long` pour eviter l'overflow :
+
+```cpp
+// Si on stocke INT_MIN (-2147483648) et INT_MAX (2147483647) :
+int result = INT_MAX - INT_MIN;   // OVERFLOW : depasse int
+long result = (long)INT_MAX - INT_MIN;  // OK : tient dans long
+```
+
+Le type de retour dans le header doit etre `long` :
+```cpp
+long shortestSpan() const;
+long longestSpan() const;
+```
+
+### size() — methode ajoutee
+
+Non requise par le sujet mais utile pour verifier si le Span est plein
+avant un test d'ajout :
+
+```cpp
+size_t Span::size() const { return _data.size(); }
+
+// dans le main :
+if (sp.size() == n)  // span vraiment plein → tester addNumber
+    sp.addNumber(42);
+```
+
+### Robustesse du main — gestion cin
+
+Meme principe que ex00 : `getSize` avec `cin.fail()` + `cin.clear()` + `cin.ignore`.
+Compteur `added` pour savoir si la boucle s'est terminee normalement ou sur un break.
 
 ### A retenir pour la soutenance
 
@@ -198,6 +285,7 @@ Après tri : {3, 6, 9, 11, 17}
 - `addRange` est template pour accepter n'importe quel type d'itérateur
 - Tester avec 10 000+ nombres via `addRange` (le sujet l'exige)
 - shortestSpan nécessite au moins 2 éléments pour avoir un écart
+- Retourner `long` pour eviter l'overflow avec INT_MIN/INT_MAX
 
 ---
 
@@ -259,6 +347,32 @@ while (it != ms.end())
 Le sujet demande de vérifier que le même affichage est obtenu avec `std::list`
 (en remplaçant `push` par `push_back`) — les deux doivent produire le même résultat.
 
+### Robustesse du main — top() sur stack vide
+
+`top()` sur un stack vide provoque un segfault (UB). Toujours verifier avec `empty()` :
+
+```cpp
+// ms.empty() herite de std::stack — top() sur stack vide = UB/segfault
+if (!ms.empty())
+    std::cout << ms.top() << std::endl;
+else
+    std::cout << "(stack vide)" << std::endl;
+```
+
+### Narrowing conversion size_t → unsigned int
+
+`getSize` retourne `size_t` (64-bit). Le constructeur `Span(unsigned int N)`
+attend un `unsigned int` (32-bit). Le code passe `n` directement sans cast :
+
+```cpp
+size_t n = getSize(...);
+Span sp(n);              // conversion implicite size_t → unsigned int
+for (size_t i = 0; i < n; ++i)
+```
+
+Pas de problème en pratique car `getSize` lit dans un `int` d'abord —
+la valeur est donc toujours <= INT_MAX, qui tient dans `unsigned int`.
+
 ### Points cles a retenir
 
 - `std::stack<T>` a un membre `protected c` — le conteneur interne (`std::deque<T>` par défaut)
@@ -281,3 +395,44 @@ Le sujet demande de vérifier que le même affichage est obtenu avec `std::list`
 - `container_type` est le typedef de `std::stack` pour le type du conteneur interne
 - `typedef typename ...::iterator` pour créer un alias de type dépendant d'un template
 - L'héritage donne automatiquement toutes les méthodes de `std::stack` (push, pop, top, size...)
+
+---
+
+## Cas de tests
+
+### ex00 — easyfind
+
+| Test | Taille | Valeurs | Chercher | Résultat attendu |
+|---|---|---|---|---|
+| Trouvé normal | 5 | 3 7 42 9 1 | 42 | Found |
+| Non trouvé | 5 | 3 7 42 9 1 | 99 | exception |
+| Conteneur vide | 0 | — | 5 | exception |
+| 1 seul element, trouvé | 1 | 7 | 7 | Found |
+| Valeur negative | 3 | -5 0 10 | -5 | Found |
+| Saisie invalide (taille) | abc | — | — | "Invalid size input" |
+| Saisie invalide (valeur) | 3 | 1 xyz | — | "Invalid input, skipping" |
+
+### ex01 — Span
+
+| Test | Capacite | Valeurs | Résultat attendu |
+|---|---|---|---|
+| Sujet exact | 5 | 6 3 17 9 11 | shortest=2, longest=14 |
+| Span vide | testEdgeCases auto | — | exception |
+| 1 element | testEdgeCases auto | — | exception |
+| Tous identiques | 3 | 5 5 5 | shortest=0, longest=0 |
+| Valeurs negatives | 3 | -10 0 10 | shortest=10, longest=20 |
+| Overflow (long) | 2 | -2147483648 2147483647 | shortest=4294967295, longest=4294967295 |
+| Saisie invalide | 3 | 1 abc | "Invalid input", puis exception si <2 |
+| addRange 10 000 | auto | 0..9999 | shortest=1, longest=9999 |
+
+Note : `shortestSpan` et `longestSpan` retournent `long` pour eviter l'overflow avec INT_MIN/INT_MAX.
+
+### ex02 — MutantStack
+
+| Test | Valeurs | Résultat attendu |
+|---|---|---|
+| Sujet exact | auto hardcode | 17 / 1 / 5 3 5 737 0 |
+| Stack vide | 0 | "(stack vide)" |
+| 1 valeur | 1 → 42 | top=42, size=1 |
+| Saisie invalide taille | abc | "Invalid Input" |
+| Saisie invalide valeur | 3 → 1 abc | "Invalid input !", size=1 |

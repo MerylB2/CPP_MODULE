@@ -19,8 +19,8 @@ class Span
         ~Span();
 
         void addNumber(int num);
-        int shortestSpan() const;
-        int longestSpan() const;
+        long shortestSpan() const;
+        long longestSpan() const;
         template <typename InputIt>
         void addRange_It(InputIt begin, InputIt end);
 };
